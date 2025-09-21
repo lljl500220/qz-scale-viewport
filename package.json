@@ -1,6 +1,6 @@
 {
   "name": "qz-scale-viewport",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "移动端设计稿完美缩放适配解决方案 - Perfect scaling solution for mobile design drafts",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
