@@ -33,18 +33,19 @@
     "layout"
   ],
   "author": {
-    "name": "小喵 (Xiao Miao)",
-    "email": "xiaomiao@example.com"
+    "name": "秦篆 (Qin Zhuan)",
+    "email": "lljl500220@gmail.com",
+    "url": "https://qinzhuan.top"
   },
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/your-username/scale-viewport.git"
+    "url": "https://github.com/lljl500220/qz-scale-viewport.git"
   },
   "bugs": {
-    "url": "https://github.com/your-username/scale-viewport/issues"
+    "url": "https://github.com/lljl500220/qz-scale-viewport/issues"
   },
-  "homepage": "https://github.com/your-username/scale-viewport#readme",
+  "homepage": "https://github.com/lljl500220/qz-scale-viewport#readme",
   "dependencies": {},
   "devDependencies": {
     "typescript": "^5.5.3"

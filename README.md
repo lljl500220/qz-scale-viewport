@@ -316,7 +316,8 @@ MIT License - 详见 [LICENSE](LICENSE) 文件
 
 ## 🐱 作者
 
-由小喵 (Xiao Miao) 用爱发电制作 ✨
+由秦篆 (Qin Zhuan) 用爱发电制作 ✨  
+个人博客：[qinzhuan.top](https://qinzhuan.top)
 
 ---
 
