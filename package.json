@@ -1,0 +1,61 @@
+{
+  "name": "scale-viewport",
+  "version": "1.0.0",
+  "description": "🐱 移动端设计稿完美缩放适配解决方案 - Perfect scaling solution for mobile design drafts",
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "npm run clean && npm run build:cjs && npm run build:esm && npm run build:types",
+    "build:cjs": "tsc -p tsconfig.cjs.json",
+    "build:esm": "tsc -p tsconfig.esm.json && mv dist/index.js dist/index.esm.js && mv dist/ScaleViewport.js dist/ScaleViewport.esm.js",
+    "build:types": "tsc -p tsconfig.types.json",
+    "clean": "rm -rf dist",
+    "dev": "node serve-demo.js",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "viewport",
+    "scale",
+    "mobile",
+    "responsive",
+    "design",
+    "adaptive",
+    "transform",
+    "css",
+    "javascript",
+    "typescript",
+    "ui",
+    "layout"
+  ],
+  "author": {
+    "name": "小喵 (Xiao Miao)",
+    "email": "xiaomiao@example.com"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-username/scale-viewport.git"
+  },
+  "bugs": {
+    "url": "https://github.com/your-username/scale-viewport/issues"
+  },
+  "homepage": "https://github.com/your-username/scale-viewport#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "typescript": "^5.5.3"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead",
+    "not ie <= 11"
+  ]
+}

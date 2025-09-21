@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>🐱 Scale Viewport Demo</title>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    
+    body, html {
+        height: 100vh;
+        overflow-x: hidden;
+    }
+    
+    #wrapper {
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        position: relative;
+        background-color: #f0f0f0;
+    }
+    
+    #content {
+        width: 750px;
+        transform-origin: top center;
+        overflow-y: auto;
+        /* 默认值，会被JavaScript动态设置 */
+        transform: scale(0.52);
+        height: calc(100vh / 0.52);
+        background-color: white;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    
+    #value {
+        width: 100%;
+        height: 100px;
+        position: sticky;
+        top: 0;
+        background-color: red;
+        z-index: 100;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 24px;
+        font-weight: bold;
+    }
+    
+    #value2 {
+        height: 2000px;
+        width: 100%;
+        background: linear-gradient(45deg, blue, lightblue);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 24px;
+        font-weight: bold;
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    #value3 {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        height: 100px;
+        background-color: green;
+        z-index: 100;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 24px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+    
+    #value3:hover {
+        background-color: darkgreen;
+    }
+    
+    /* 实时指标显示 */
+    .metrics {
+        position: fixed;
+        top: 10px;
+        right: 10px;
+        background: rgba(0,0,0,0.8);
+        color: white;
+        padding: 10px;
+        border-radius: 5px;
+        font-size: 12px;
+        font-family: monospace;
+        z-index: 1000;
+    }
+</style>
+<body>
+    <div id="wrapper">
+        <div id="content">
+            <div id="value">🐱 顶部固定区域 (Sticky Header)</div>
+            <div id="value2">
+                <div>可滚动内容区域 (Scrollable Content)</div>
+                <div style="margin-top: 200px;">📱 测试滚动效果</div>
+                <div style="margin-top: 300px;">🎯 PC端390px，移动端100vw</div>
+                <div style="margin-top: 400px;">✨ 完美缩放适配</div>
+                <div style="margin-top: 500px;">🚀 即将到底了...</div>
+            </div>
+            <div id="value3" onclick="toggleScroll()">底部固定区域 - 点击测试弹窗</div>
+        </div>
+    </div>
+    
+    <!-- 实时指标显示 -->
+    <div class="metrics" id="metrics">
+        加载中...
+    </div>
+    
+    <!-- 使用封装后的ScaleViewport类 -->
+    <script src="../dist/scale-viewport.browser.js"></script>
+    <script>
+        // 使用封装后的ScaleViewport类
+        const scaleViewport = createScaleViewport(
+            { 
+                content: document.getElementById('content'), 
+                wrapper: document.getElementById('wrapper') 
+            },
+            {
+                designWidth: 750,
+                pcWidth: 390,
+                mobileBreakpoint: 768,
+                debug: true
+            }
+        );
+        
+        // 更新指标显示
+        function updateMetrics() {
+            const metrics = document.getElementById('metrics');
+            const scale = scaleViewport.getCurrentScale();
+            const isMobile = scaleViewport.isMobile();
+            
+            metrics.innerHTML = `
+                屏幕: ${window.innerWidth}px<br>
+                类型: ${isMobile ? '📱移动端' : '💻PC端'}<br>
+                缩放: ${scale.toFixed(4)}<br>
+                宽度: ${scaleViewport.getVisualWidth().toFixed(0)}px<br>
+                设计: 750px<br>
+                版本: 封装版
+            `;
+        }
+        
+        // 初始更新和监听
+        updateMetrics();
+        window.addEventListener('resize', updateMetrics);
+        
+        // 测试功能
+        let scrollDisabled = false;
+        function toggleScroll() {
+            const content = document.getElementById('content');
+            if (scrollDisabled) {
+                content.style.overflow = 'auto';
+                document.getElementById('value3').textContent = '底部固定区域 - 点击测试弹窗';
+                scrollDisabled = false;
+            } else {
+                content.style.overflow = 'hidden';
+                document.getElementById('value3').textContent = '滚动已禁用 - 再次点击恢复';
+                scrollDisabled = true;
+            }
+        }
+        
+        console.log('🐱 封装版Scale Viewport Demo 加载完成！');
+    </script>
+</body>
+</html>
