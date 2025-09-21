@@ -1,10 +1,6 @@
-"use strict";
 // 🐱 小喵的智能缩放库 - Scale Viewport
 // 用于解决移动端设计稿在不同设备上的完美缩放适配问题
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.ScaleViewport = void 0;
-exports.createScaleViewport = createScaleViewport;
-class ScaleViewport {
+export class ScaleViewport {
     constructor(elements, config) {
         this.isDestroyed = false;
         // 参数验证
@@ -41,19 +37,8 @@ class ScaleViewport {
         this.log('🐱 ScaleViewport 初始化完成');
     }
     setupInitialStyles() {
-        const { content, wrapper } = this.elements;
-        // 只设置必要的样式，不干扰CSS的初始设置
-        if (!wrapper.style.position) {
-            wrapper.style.position = 'relative';
-        }
-        if (!wrapper.style.overflowX) {
-            wrapper.style.overflowX = 'hidden';
-        }
-        // content的基础样式通常由CSS设置，这里只确保关键属性
-        if (!content.style.width) {
-            content.style.width = `${this.config.designWidth}px`;
-        }
-        // 不要覆盖CSS中已经设置的overflow-y
+        // 🐱 不设置任何初始样式，完全依赖CSS！
+        // 让CSS保持完全的控制权，避免JavaScript干扰
     }
     updateScale() {
         if (this.isDestroyed)
@@ -163,10 +148,9 @@ class ScaleViewport {
         this.log('🐱 ScaleViewport 已销毁');
     }
 }
-exports.ScaleViewport = ScaleViewport;
 // 便捷的工厂函数
-function createScaleViewport(elements, config) {
+export function createScaleViewport(elements, config) {
     return new ScaleViewport(elements, config);
 }
 // 默认导出
-exports.default = ScaleViewport;
+export default ScaleViewport;

@@ -77,21 +77,8 @@ export class ScaleViewport {
     }
 
     private setupInitialStyles(): void {
-        const { content, wrapper } = this.elements;
-        
-        // 只设置必要的样式，不干扰CSS的初始设置
-        if (!wrapper.style.position) {
-            wrapper.style.position = 'relative';
-        }
-        if (!wrapper.style.overflowX) {
-            wrapper.style.overflowX = 'hidden';
-        }
-        
-        // content的基础样式通常由CSS设置，这里只确保关键属性
-        if (!content.style.width) {
-            content.style.width = `${this.config.designWidth}px`;
-        }
-        // 不要覆盖CSS中已经设置的overflow-y
+        // 🐱 不设置任何初始样式，完全依赖CSS！
+        // 让CSS保持完全的控制权，避免JavaScript干扰
     }
 
     private updateScale(): void {

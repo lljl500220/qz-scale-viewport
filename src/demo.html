@@ -116,49 +116,88 @@
         </div>
     </div>
     
-    <!-- 实时指标显示 -->
-    <div class="metrics" id="metrics">
-        加载中...
-    </div>
     
-    <!-- 使用封装后的ScaleViewport类 -->
-    <script src="../dist/scale-viewport.browser.js"></script>
+    <!-- 使用原始的内联JavaScript代码 -->
     <script>
-        // 使用封装后的ScaleViewport类
-        const scaleViewport = createScaleViewport(
-            { 
-                content: document.getElementById('content'), 
-                wrapper: document.getElementById('wrapper') 
-            },
-            {
-                designWidth: 750,
-                pcWidth: 390,
-                mobileBreakpoint: 768,
-                debug: true
-            }
-        );
-        
-        // 更新指标显示
-        function updateMetrics() {
-            const metrics = document.getElementById('metrics');
-            const scale = scaleViewport.getCurrentScale();
-            const isMobile = scaleViewport.isMobile();
+        // 🐱 小喵的智能缩放系统 ✨ (原始内联版本)
+
+        function setContentScale() {
+            const content = document.getElementById('content');
+            const wrapper = document.getElementById('wrapper');
             
-            metrics.innerHTML = `
-                屏幕: ${window.innerWidth}px<br>
-                类型: ${isMobile ? '📱移动端' : '💻PC端'}<br>
-                缩放: ${scale.toFixed(4)}<br>
-                宽度: ${scaleViewport.getVisualWidth().toFixed(0)}px<br>
-                设计: 750px<br>
-                版本: 封装版
-            `;
+            if (!content || !wrapper) {
+                console.error('🐱 找不到content或wrapper元素！');
+                return;
+            }
+            
+            const screenWidth = window.innerWidth;
+            let scale;
+            
+            // 判断是否为移动端（768px以下）
+            if (screenWidth <= 768) {
+                // 移动端：按屏幕宽度缩放，让750px容器铺满屏幕
+                scale = screenWidth / 750;
+                
+                // 调整transform-origin为top left，避免居中导致的位置问题
+                content.style.transformOrigin = 'top left';
+                content.style.position = 'absolute';
+                content.style.left = '0';
+                content.style.top = '0';
+                
+                // wrapper不需要flex居中
+                wrapper.style.display = 'block';
+                wrapper.style.justifyContent = 'flex-start';
+                
+            } else {
+                // PC端：固定缩放到390px，保持居中
+                scale = 390 / 750; // 0.52
+                
+                content.style.transformOrigin = 'top center';
+                content.style.position = 'static';
+                content.style.left = 'auto';
+                content.style.top = 'auto';
+                
+                // wrapper使用flex居中
+                wrapper.style.display = 'flex';
+                wrapper.style.justifyContent = 'center';
+            }
+            
+            // 设置缩放和高度 - 这是关键！
+            content.style.transform = `scale(${scale})`;
+            content.style.height = `${100 / scale}vh`;
+            
+            console.log(`🐱 屏幕宽度: ${screenWidth}px, 缩放比例: ${scale.toFixed(4)}, 容器视觉宽度: ${(750 * scale).toFixed(0)}px`);
+            
+            // 更新指标显示
+            updateMetrics(scale, screenWidth <= 768);
         }
-        
-        // 初始更新和监听
-        updateMetrics();
-        window.addEventListener('resize', updateMetrics);
-        
-        // 测试功能
+
+        // 更新指标显示
+        function updateMetrics(scale, isMobile) {
+            const metrics = document.getElementById('metrics');
+            if (metrics) {
+                metrics.innerHTML = `
+                    屏幕: ${window.innerWidth}px<br>
+                    类型: ${isMobile ? '📱移动端' : '💻PC端'}<br>
+                    缩放: ${scale.toFixed(4)}<br>
+                    宽度: ${(750 * scale).toFixed(0)}px<br>
+                    设计: 750px<br>
+                    版本: 内联JS
+                `;
+            }
+        }
+
+        // 页面加载时设置
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', setContentScale);
+        } else {
+            setContentScale();
+        }
+
+        // 窗口大小改变时重新设置
+        window.addEventListener('resize', setContentScale);
+
+        // 测试弹窗功能
         let scrollDisabled = false;
         function toggleScroll() {
             const content = document.getElementById('content');
@@ -166,14 +205,16 @@
                 content.style.overflow = 'auto';
                 document.getElementById('value3').textContent = '底部固定区域 - 点击测试弹窗';
                 scrollDisabled = false;
+                console.log('🐱 恢复滚动');
             } else {
                 content.style.overflow = 'hidden';
                 document.getElementById('value3').textContent = '滚动已禁用 - 再次点击恢复';
                 scrollDisabled = true;
+                console.log('🐱 禁用滚动');
             }
         }
-        
-        console.log('🐱 封装版Scale Viewport Demo 加载完成！');
+
+        console.log('🐱 Scale Viewport Demo 加载完成！(使用原始内联JavaScript版本)');
     </script>
 </body>
 </html>
